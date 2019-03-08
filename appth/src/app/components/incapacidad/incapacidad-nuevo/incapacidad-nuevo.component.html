@@ -1,0 +1,248 @@
+<section class="content-header">
+  <h1>
+    INCAPACIDADES
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a routerLink="/hojadevida">
+        <i class="fa fa-folder"></i> incapacidad</a>
+    </li>
+    <li class="active">Nuevo</li>
+  </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+
+  <!-- TITULO FORMULARIO -->
+  <div class="box box-default">
+    <div class="box-header with-border" id="titulo">
+      <h3 class="box-title">INCAPACIDADES MEDICAS O LICENCIA</h3>
+      <form role="form" [formGroup]="form">
+
+      </form>
+    </div>
+
+
+    <!--Inicio de formularios-->
+    <form role="form" [formGroup]="form">
+      <!--Titulo formulario datos basicos-->
+      <div class="box-header with-border">
+        <h3 class="box-title" id="segmento_2">DATOS BASICOS</h3>
+      </div>
+
+      <!--formulario de busqueda de personal-->
+      <div class="box-body">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Buscar por cedula</label>
+            <div class="input-group margin">
+              <input type="text" class="form-control" id="numerodocumento" formControlName="numerodocumento" placeholder="Buscar por número de Identificación ...">
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-success btn-flat" (click)="buscarContrato()" [disabled]="!numerodocumento.valid" tooltip="Buscar."
+                  placement="top">
+                  <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!--contenido del formulario incapacidades-->
+      <div class="box-body">
+
+        <div class="row">
+          <div class="col-md-6">
+
+            <div class="form-group">
+              <label>Nombres: </label>
+
+              <input type="text" class="form-control" formControlName="primernombre" placeholder="Nombres ..." disabled>
+            </div>
+
+            <div class="form-group">
+              <label>Apellidos: </label>
+
+              <input type="text" class="form-control" formControlName="apellido" placeholder="Apellidos ..." disabled>
+            </div>
+
+            <div class="form-group">
+              <label>Area:</label>
+
+              <input type="text" class="form-control" formControlName="area" placeholder="Area ..." disabled>
+            </div>
+
+          </div>
+
+          <div class="col-md-6">
+
+
+            <div class="form-group">
+              <label>Documento de identidad: </label>
+
+              <input type="text" class="form-control" formControlName="documento" placeholder="Número Documento ..." disabled>
+            </div>
+
+            <div class="form-group">
+              <label>Cargo:</label>
+
+              <input type="text" class="form-control" formControlName="cargo" placeholder="Cargo ..." disabled>
+            </div>
+
+
+            <div class="form-group">
+              <label>Eps:</label>
+
+              <input type="text" class="form-control" formControlName="eps" placeholder="Eps ..." disabled>
+            </div>
+          </div>
+
+
+        </div>
+        <!--fin de la fila-->
+
+      </div>
+
+      <!--fin del contenido del formulario incapacidades-->
+    </form>
+  </div>
+  <!--Inicio segmento 2 Datos de incapcidad-->
+
+  <!-- TITULO FORMULARIO -->
+  <div class="box box-default">
+    <div class="box-header with-border">
+      <h3 class="box-title" id="segmento_2">DATOS INCAPACIDAD/LICENCIA {{opcion}} {{isProrroga}}</h3>
+    </div>
+    <!--contenido del formulario incapacidad/licencias-->
+    <form role="form" [formGroup]="form">
+      <div class="box-body">
+
+        <!--inicio de fila-->
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Tipo de incapacidad:</label>
+              <span class="text-danger">*</span>
+              <ng-select placeholder="Seleccione" id="tipoincapacidad" formControlName="tipoincapacidad" [options]="datosTipoIncapacidad">
+              </ng-select>
+            </div>
+
+
+            <div class="form-group">
+              <label>Fecha de incidente</label>
+              <span class="text-danger">*</span>
+              <input type="text" placeholder="Fecha en el que se presento el incidente" class="form-control" id="fechaincidente" formControlName="fechaincidente"
+                placeholder="dd/MM/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
+            </div>
+
+
+            <div class="form-group">
+              <label>Fecha fin</label>
+              <span class="text-danger">*</span>
+              <input type="text" placeholder="Fecha fin de incapacidad" class="form-control" id="fechafin" formControlName="fechafin" placeholder="dd/MM/yyyy"
+                #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
+            </div>
+
+            <div class="form-group">
+              <label>Dias autorizados: </label>
+              <span class="text-danger">*</span>
+              <input type="number" min="01" max="365" class="form-control" id="diaautorizado" formControlName="diaautorizado" placeholder="Dias autorizados">
+            </div>
+
+            <div [hidden]="!isProrroga">
+              <div class="form-group">
+                <label>Prorroga: </label>
+                <input type="number" min="01" max="365" class="form-control" id="prorroga" formControlName="prorroga" placeholder="Prorroga">
+              </div>
+            </div>
+
+          </div>
+          <!--fin de la columna 1-->
+
+
+
+          <!--inicio de la columna 2-->
+
+          <div class="col-md-6">
+
+            <!--inicio form-group 2-->
+            <div class="form-group">
+              <label>Diagnostico Principal:</label>
+              <span class="text-danger">*</span>
+              <ng-select placeholder="Seleccione" id="cie" formControlName="cie" [options]="lstCie10"></ng-select>
+            </div>
+            <!--fin del form-group 2-->
+
+
+
+
+            <!--inicio del form group 2-->
+            <div class="form-group">
+              <label>Fecha de inicio</label>
+              <span class="text-danger">*</span>
+              <input type="text" placeholder="Fecha de inicio de incapacidad" class="form-control" id="fechainicio" formControlName="fechainicio"
+                placeholder="dd/MM/yyyy" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
+
+            </div>
+
+
+            <div class="form-group">
+              <label>Dias solicitados: </label>
+              <span class="text-danger">*</span>
+              <input type="number" min="01" max="365" class="form-control" id="diasolicitado" formControlName="diasolicitado" placeholder="Dia solicitados">
+            </div>
+
+            <div class="form-group">
+              <label>Archivo adjunto:</label>
+              <span class="text-danger">*</span>
+              <input type="file" #file name="file" formControlName="file" class="form-control" (change)="onFileSelected($event)" accept=".pdf"
+              />
+
+            </div>
+
+
+          </div>
+          <!--fin de la columna 2-->
+        </div>
+        <!-- fin de fila 2-->
+      </div>
+    </form>
+    <!--fin del contenido del formulario incapacidad/licencias-->
+  </div>
+
+
+  <!--botonera-->
+  <div class="margin pull-right">
+    <div class="btn-group">
+      <button class="btn btn-danger" (click)="cancelar()" tooltip="Cancelar." placement="top">
+        <span class="fa fa-close" aria-hidden="true"> Cancelar</span>
+      </button>
+    </div>&nbsp;
+    <div class="btn-group">
+      <button type="submit" class="btn btn-success" (click)="guardar()" [disabled]="!form.valid" tooltip="Guardar." placement="top">
+        <span class="fa fa-save" arsia-hidden="true"> Guardar</span>
+      </button>
+    </div>
+  </div>
+  <!--fin de botonera-->
+
+
+  <br/>
+  <br/>
+
+
+  <!--impresion de datos (solo para el modo de pruebas)-->
+
+  <!-- <div class="row">
+    <div class="col-xs-12 col-md-12">
+      <pre class="code-preview">{{form.value | json}}</pre>
+    </div>
+  </div> -->
+
+  <!--fin del modulo-->
+</section>

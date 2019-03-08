@@ -1,0 +1,481 @@
+<section class="content-header">
+  <h1>
+    Contratos
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a routerLink="/Contratos">
+        <i class="fa fa-folder"></i>Contratos</a>
+    </li>
+    <li class="active">Nuevo</li>
+  </ol>
+</section>
+<section class="content">
+  <div>
+    <div>
+      <tabset>
+        <tab heading="Contrato" id="tab1">
+          <form role="form" [formGroup]="formb">
+            <!--<tabset>-->
+            <div class="box box-success">
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <!--Buscador Hoja de vida-->
+                    <!--   <label>Buscar Hoja de Vida</label> -->
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Buscador Hoja de Vida</h3>
+                      <div class="input-group margin">
+                        <input type="text" class="form-control" id="identificacion" formControlName="identificacion"
+                          placeholder="Buscar por número de Identificación ...">
+                        <span class="input-group-btn">
+                          <button type="button" id="identificacion" (click)="buscarHojaVida()" class="btn btn-success btn-flat "
+                            [disabled]="!identificacion.valid">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            Buscar
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--label primer Nombre-->
+                <div class="col-md-6 ">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label>Primer Nombre</label>
+                      <input type="text" class="form-control" id="primernombre" formControlName="primernombre"
+                        placeholder="Primer Nombre..." [attr.disabled]="true">
+                    </div>
+                  </div>
+                </div>
+                <!--label Segundo Nombre-->
+                <div class="col-md-6 ">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label>Segundo Nombre</label>
+                      <input type="text" class="form-control" id="segundonombre" formControlName="segundonombre"
+                        placeholder="Segundo Nombre..." [attr.disabled]="true">
+                    </div>
+                  </div>
+                </div>
+                <!--Primer Apellido -->
+                <div class="col-md-6 ">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label>Primer Apellido</label>
+                      <input type="text" class="form-control" id="primerapellido" formControlName="primerapellido"
+                        placeholder="Primer Apellido ..." [attr.disabled]="true">
+                    </div>
+                  </div>
+                </div>
+                <!--Segundo Apellido -->
+                <div class="col-md-6 ">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label>Segundo Apellido</label>
+                      <input type="text" class="form-control" id="segundoapellido" formControlName="segundoapellido"
+                        placeholder="Segundo Apellido ..." [attr.disabled]="true">
+                    </div>
+                  </div>
+                </div>
+                <!--Tipo documento-->
+                <div class="col-md-6 ">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label>Tipo de Documento</label>
+                      <input type="text" class="form-control" id="tipodocumento" formControlName="tipodocumento"
+                        placeholder="Tipo de documento ..." [attr.disabled]="true">
+                    </div>
+                  </div>
+                </div>
+                <!--Número documento-->
+                <div class="col-md-6 ">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label>Número de Documento</label>
+                      <input type="text" class="form-control" id="numerodocumento" formControlName="numerodocumento"
+                        placeholder="Número de documento ..." [attr.disabled]="true">
+                    </div>
+                  </div>
+                </div>
+
+                <!--Genero-->
+                <div class="col-md-6 ">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label>Genero</label>
+                      <input type="text" class="form-control" id="genero" formControlName="sexo" placeholder="Genero ..."
+                        [attr.disabled]="true">
+                    </div>
+                  </div>
+                </div>
+                <!--Email-->
+                <div class="col-md-6 ">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label>Correo Electronico</label>
+                      <input type="text" class="form-control" id="email" formControlName="email" placeholder="Correo Electronico ..."
+                        [attr.disabled]="true">
+                    </div>
+                  </div>
+                </div>
+                <!--Fecha Nacimiento-->
+                <div class="col-md-6 ">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label>Fecha Nacimiento</label>
+                      <input type="text" class="form-control" id="fechanacimiento" formControlName="fechanacimiento"
+                        placeholder="Fecha Nacimiento ..." [attr.disabled]="true">
+                    </div>
+                  </div>
+                </div>
+                <!--Telefono Movil-->
+                <div class="col-md-6 ">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label>Telefono Movil</label>
+                      <input type="text" class="form-control" id="telefonomovil" formControlName="telefonomovil"
+                        placeholder="Telefono Movil ..." [attr.disabled]="true">
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </form>
+          <form role="form" [formGroup]="form">
+            <accordion [closeOthers]="oneAtATime">
+
+              <!--Estudios-->
+              <accordion-group heading="Estudios">
+                <app-estudios [listEstudios]="listEstudios"></app-estudios>
+              </accordion-group>
+
+              <!--Experiencia-->
+              <accordion-group heading="Experiencia">
+                <app-experiencia [listExperiencia]="listExperiencia"></app-experiencia>
+              </accordion-group>
+
+              <!--Datos Generales contrato-->
+              <accordion-group heading="Contrato">
+                <div class="box box-success">
+                  <div class="box-body">
+                    <div class="row">
+                      <!--Cbx Cargo-->
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Cargo</label>
+                          <span class="text-danger">*</span>
+                          <ng-select [allowClear]="true" placeholder="Seleccione" id="cargo" formControlName="cargo"
+                            [options]="listCargo">
+                          </ng-select>
+                          <div *ngIf="cargo.invalid && (cargo.dirty || cargo.touched)">
+                            <div class="label-error" *ngIf="cargo.errors['required']">
+                              El campo cargo no debe estar vacio
+                            </div>
+                            <div class="label-error" *ngIf="cargo.errors['pattern']">
+                              El cargo no puede contener números
+                            </div>
+                          </div>
+                        </div>
+                        <!--Cbx Área-->
+                        <div class="form-group">
+                          <label>Área</label>
+                          <span class="text-danger">*</span>
+                          <ng-select [allowClear]="true" placeholder="Seleccione" id="area" formControlName="area"
+                            [options]="listArea">
+                          </ng-select>
+                          <div *ngIf="area.invalid && (area.dirty || area.touched)">
+                            <div class="label-error" *ngIf="area.errors['required']">
+                              El campo Área no debe estar vacio
+                            </div>
+                            <div class="label-error" *ngIf="area.errors['pattern']">
+                              El Área no puede contener números
+                            </div>
+                          </div>
+                        </div>
+                        <!--Cbx Sede-->
+                        <div class="form-group">
+                          <label>Sede</label>
+                          <span class="text-danger">*</span>
+                          <ng-select [allowClear]="true" placeholder="Seleccione" id="sede" formControlName="sede"
+                            [options]="listSede">
+                          </ng-select>
+                          <div *ngIf="sede.invalid && (sede.dirty || sede.touched)">
+                            <div class="label-error" *ngIf="sede.errors['required']">
+                              El campo Sede no debe estar vacio
+                            </div>
+                            <div class="label-error" *ngIf="sede.errors['pattern']">
+                              El Sede no puede contener números
+                            </div>
+                          </div>
+                        </div>
+                        <!--Cbx Tipo de contrato-->
+                        <div class="form-group">
+                          <label>Tipo Contrato</label>
+                          <span class="text-danger">*</span>
+                          <ng-select [allowClear]="true" placeholder="Seleccione" id="tipoContrato" formControlName="tipoContrato"
+                            [options]="listTipoContrato">
+                          </ng-select>
+                          <div *ngIf="tipoContrato.invalid && (tipoContrato.dirty || tipoContrato.touched)">
+                            <div class="label-error" *ngIf="tipoContrato.errors['required']">
+                              El campo Tipo Contrato no debe estar vacio
+                            </div>
+                            <div class="label-error" *ngIf="tipoContrato.errors['pattern']">
+                              El Tipo Contrato no puede contener números
+                            </div>
+                          </div>
+                        </div>
+                        <!--Cbx Estado de contrato-->
+                        <div class="form-group">
+                          <label>Estado Contrato</label>
+                          <span class="text-danger">*</span>
+                          <ng-select [allowClear]="true" placeholder="Seleccione" id="estadoContrato" formControlName="estadoContrato"
+                            [options]="listEstadoContrato">
+                          </ng-select>
+                          <div *ngIf="estadoContrato.invalid && (estadoContrato.dirty || estadoContrato.touched)">
+                            <div class="label-error" *ngIf="estadoContrato.errors['required']">
+                              El campo Estado Contrato no debe estar vacio
+                            </div>
+                            <div class="label-error" *ngIf="estadoContrato.errors['pattern']">
+                              El Estado Contrato no puede contener números
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <!--Número de Contrato-->
+                        <div class="form-group">
+                          <label>Número de Contrato</label>
+                          <span class="text-danger">*</span>
+                          <input type="text" class="form-control" id="numeroContrato" formControlName="numeroContrato"
+                            placeholder="Número de Contrato ..." [attr.disabled]="true">
+                          <div *ngIf="numeroContrato.invalid && (numeroContrato.dirty || numeroContrato.touched)">
+                            <div class="label-error" *ngIf="numeroContrato.errors['required']">
+                              El campo Número de Contrato no debe estar vacio
+                            </div>
+
+                            <div class="label-error" *ngIf="numeroContrato.errors['pattern']">
+                              El Numero de Contrato no contiene un formato valido
+                            </div>
+
+
+                          </div>
+                        </div>
+                        <!--Número de Objetivo-->
+                        <div class="form-group">
+                          <label>Objeto del Contrato</label>
+                          <span class="text-danger">*</span>
+                          <input type="text" class="form-control" id="objetivo" formControlName="objetivo" placeholder="Objetivo del cotrato ...">
+                          <div *ngIf="objetivo.invalid && (objetivo.dirty || objetivo.touched)">
+                            <div class="label-error" *ngIf="objetivo.errors['required']">
+                              El campo Objetivo del contrato no debe estar vacio
+                            </div>
+                            <div class="label-error" *ngIf="objetivo.errors['pattern']">
+                              El Objetivo del contrato no puede contener números
+                            </div>
+                          </div>
+                        </div>
+                        <!--Fecha Inicio-->
+                        <div class="form-group">
+                          <label>Fecha Inicio</label>
+                          <span class="text-danger">*</span>
+                          <input type="text" class="form-control" [(ngModel)]="fechaIni" formControlName="fechaInicio"
+                            placeholder="mm/dd/yyyy" #dp="bsDatepicker" bsDatepicker>
+                          <div *ngIf="fechaInicio.invalid && (fechaInicio.dirty || fechaInicio.touched)">
+                            <div class="label-error" *ngIf="fechaInicio.errors['required']">
+                              El campo Fecha Inicio no debe estar vacio
+                            </div>
+                            <div class="label-error" *ngIf="fechaInicio.errors['pattern']">
+                              El Fecha Inicio no puede contener números
+                            </div>
+                          </div>
+                        </div>
+                        <!--Fecha Fin-->
+                        <div class="form-group">
+                          <label>Fecha Fin</label>
+                          <span class="text-danger">*</span>
+                          <input type="text" class="form-control" formControlName="fechaFin" [minDate]="fechaminDate"
+                            placeholder="mm/dd/yyyy" #dp="bsDatepicker" bsDatepicker>
+                          <div *ngIf="fechaFin.invalid && (fechaFin.dirty || fechaFin.touched)">
+                            <div class="label-error" *ngIf="fechaFin.errors['required']">
+                              El campo Fecha Fin no debe estar vacio
+                            </div>
+                            <div class="label-error" *ngIf="fechaFin.errors['pattern']">
+                              El Fecha Fin no puede contener números
+                            </div>
+                          </div>
+                        </div>
+                        <!--Salario-->
+                        <div class="form-group">
+                          <label>Salario</label>
+                          <span class="text-danger">*</span>
+                          <input type="text" class="form-control" id="salario" (blur)="onBlur($event)" formControlName="salario"
+                            placeholder="Salario $ ...">
+                          <div *ngIf="salario.invalid && (salario.dirty || salario.touched)">
+                            <div class="label-error" *ngIf="salario.errors['required']">
+                              El campo Salario no debe estar vacio
+                            </div>
+                            <div class="label-error" *ngIf="salario.errors['pattern']">
+                              El campo Salario no contiene un formato valido
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </accordion-group>
+              <!--Seguridad Social-->
+              <accordion-group heading="Seguridad Social">
+                <div class="box box-success">
+                  <div class="box-body">
+                    <div class="row">
+                      <!--Cbx Arl-->
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Arl</label>
+                          <span class="text-danger">*</span>
+                          <ng-select [allowClear]="true" placeholder="Seleccione" id="arl" formControlName="arl"
+                            [options]="listArl">
+                          </ng-select>
+                          <div *ngIf="arl.invalid && (arl.dirty || arl.touched)">
+                            <div class="label-error" *ngIf="arl.errors['required']">
+                              El Arl no debe estar vacio
+                            </div>
+                            <div class="label-error" *ngIf="arl.errors['pattern']">
+                              El Arl no puede contener números
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--Cbx Fondo de Pensión-->
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Fondo Pensión</label>
+                          <span class="text-danger">*</span>
+                          <ng-select [allowClear]="true" placeholder="Seleccione" id="fondoPension" formControlName="fondoPension"
+                            [options]="listFondoPension">
+                          </ng-select>
+                          <div *ngIf="fondoPension.invalid && (fondoPension.dirty || fondoPension.touched)">
+                            <div class="label-error" *ngIf="fondoPension.errors['required']">
+                              El campo Fondo Pensión no debe estar vacio
+                            </div>
+                            <div class="label-error" *ngIf="fondoPension.errors['pattern']">
+                              El Fondo Pensión no puede contener números
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--Cbx Eps-->
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Eps</label>
+                          <span class="text-danger">*</span>
+                          <ng-select [allowClear]="true" placeholder="Seleccione" id="eps" formControlName="eps"
+                            [options]="lisEps">
+                          </ng-select>
+                          <div *ngIf="eps.invalid && (eps.dirty || eps.touched)">
+                            <div class="label-error" *ngIf="eps.errors['required']">
+                              El campo Eps no debe estar vacio
+                            </div>
+                            <div class="label-error" *ngIf="eps.errors['pattern']">
+                              El Fondo Eps no puede contener números
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </accordion-group>
+              <accordion-group heading="Dotación" [isDisabled]="isFirstDisabled">
+                <div class="box box-success">
+                  <div class="box-body">
+                    <div class="row">
+                      <!--Talla de Camisa-->
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Talla de Camisa</label>
+                          <input type="text" class="form-control" id="tallaCamisa" formControlName="tallaCamisa"
+                            placeholder="Dígite S, M, L, XL, XXL ...">
+                          <div *ngIf="tallaCamisa.invalid && (tallaCamisa.dirty || tallaCamisa.touched)">
+                            <div class="label-error" *ngIf="tallaCamisa.errors['required']">
+                              El campo Talla de camisa no debe estar vacio
+                            </div>
+                            <div class="label-error" *ngIf="tallaCamisa.errors['pattern']">
+                              El campo Talla de camisa no puede contener números
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--Talla de pantalón -->
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Talla de Pantalón</label>
+                          <input type="text" class="form-control" id="tallaPantalon" formControlName="tallaPantalon"
+                            placeholder="Dígite, Talla Pantalón ...">
+                          <div *ngIf="tallaPantalon.invalid && (tallaPantalon.dirty || tallaPantalon.touched)">
+                            <div class="label-error" *ngIf="tallaPantalon.errors['required']">
+                              El campo Talla de Pantalón no debe estar vacio
+                            </div>
+                            <div class="label-error" *ngIf="tallaPantalon.errors['pattern']">
+                              El campo Talla de Pantalón no puede contener más de tres números.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--Talla de  Calzado-->
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Talla de Calzado</label>
+                          <input type="text" class="form-control" id="tallaCalzado" formControlName="tallaCalzado"
+                            placeholder="Dígite,  Talla de Calzado ...">
+                          <div *ngIf="tallaCalzado.invalid && (tallaCalzado.dirty || tallaCalzado.touched)">
+                            <div class="label-error" *ngIf="tallaCalzado.errors['required']">
+                              El campo Talla de Calzado no debe estar vacio
+                            </div>
+                            <div class="label-error" *ngIf="tallaCalzado.errors['pattern']">
+                              El campo Talla de Calzado no puede contener más de tres dígitos.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </accordion-group>
+              <!--   <accordion-group heading="Editar contrato">
+                <ckeditor [(ngModel)]="mycontent" #myckeditor [config]="ckeConfig" formControlName="doccontrato"
+                  debounce="500" (change)="onChange($event)">
+                </ckeditor>
+              </accordion-group>-->
+            </accordion>
+            <br />
+          </form>
+          <!-- </tabset>-->
+          <div class="margin pull-right">
+            <div class="btn-group">
+              <button class="btn btn-danger" (click)="cancelar()">
+                <span class="fa fa-close" aria-hidden="true"></span> Cancelar
+              </button>
+            </div>
+            &nbsp;
+            <!--[disabled]="(!form.valid || !numerodocumento.valid)"-->
+            <div class="btn-group">
+              <button type="submit" class="btn btn-success" (click)="guardar()" [disabled]="!form.valid">
+                <span class="fa fa-edit" aria-hidden="true"></span> Guardar</button>
+            </div>
+          </div>
+        </tab>
+      </tabset>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-12">
+      <pre class="code-preview">{{form.value | json}}</pre>
+    </div>
+  </div>
+</section>

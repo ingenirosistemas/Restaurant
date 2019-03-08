@@ -1,0 +1,505 @@
+<section class="content-header">
+  <h1>
+    Hojas de vida
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a routerLink="/hojadevida">
+        <i class="fa fa-folder"></i> Hojas de vida</a>
+    </li>
+    <li class="active">Nuevo</li>
+  </ol>
+</section>
+
+
+<section class="content">
+
+  <form role="form" [formGroup]="form" (keydown.enter)="$event.preventDefault()">
+    <tabset>
+      <tab heading="Datos Generales" id="tab1">
+        <div class="box box-success">
+          <div class="box-header with-border">
+          </div>
+
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Tipo Documento</label>
+                  <span class="text-danger">*</span>
+                  <ng-select #tipodocumentoSelect placeholder="Seleccione" id="tipodocumento" formControlName="tipodocumento" [options]="lstTipoIdentificacion"
+                    [allowClear]="true">
+                  </ng-select>
+                  <div *ngIf="tipodocumento.invalid && (tipodocumento.dirty || tipodocumento.touched)">
+                    <div class="label-error" *ngIf="tipodocumento.errors['required']">
+                      El campo Tipo Documento no debe estar vacio
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Primer Nombre</label>
+                  <span class="text-danger">*</span>
+                  <input type="text" class="form-control" id="primernombre" formControlName="primernombre" placeholder="Primer Nombre ...">
+                  <div *ngIf="primernombre.invalid && (primernombre.dirty || primernombre.touched)">
+                    <div class="label-error" *ngIf="primernombre.errors['required']">
+                      El Primer Nombre no debe estar vacio
+                    </div>
+                    <div class="label-error" *ngIf="primernombre.errors['pattern']">
+                      El Formato es Incorrecto.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Primer Apellido</label>
+                  <span class="text-danger">*</span>
+                  <input type="text" class="form-control" id="primerapellido" formControlName="primerapellido" placeholder="Primer Apellido ...">
+                  <div *ngIf="primerapellido.invalid && (primerapellido.dirty || primerapellido.touched)">
+                    <div class="label-error" *ngIf="primerapellido.errors['required']">
+                      El campo Primer Apellido no debe estar vacio
+                    </div>
+                    <div class="label-error" *ngIf="primerapellido.errors['pattern']">
+                      El Primer Apellido no puede contener números
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Estado Civil</label>
+                  <span class="text-danger">*</span>
+                  <ng-select placeholder="Seleccione" id="estadocivil" formControlName="estadocivil" [options]="lstEstadoCivil" [allowClear]="true">
+                  </ng-select>
+                  <div *ngIf="estadocivil.invalid && (estadocivil.dirty || estadocivil.touched)">
+                    <div class="label-error" *ngIf="estadocivil.errors['required']">
+                      El campo Estado Civil no debe estar vacio
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Fecha de Nacimiento</label>
+                  <span class="text-danger">*</span>
+                  <input type="text" class="form-control" formControlName="fechanacimiento" placeholder="dd/MM/yyyy" #dp="bsDatepicker" bsDatepicker
+                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
+                  <div *ngIf="fechanacimiento.invalid && (fechanacimiento.dirty || fechanacimiento.touched)">
+                    <div class="label-error" *ngIf="fechanacimiento.errors['required']">
+                      El campo Fecha Nacimiento no debe estar vacio
+                    </div>
+                    <div class="label-error" *ngIf="fechanacimiento.errors['pattern']">
+                      El Fecha Nacimiento no puede contener números
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Telefono Casa</label>
+                  <input type="text" class="form-control" id="telefonocasa" formControlName="telefonocasa" placeholder="Telefono Fijo ...">
+                  <div *ngIf="telefonocasa.invalid && (telefonocasa.dirty || telefonocasa.touched)">
+                    <div class="label-error" *ngIf="telefonocasa.errors['required']">
+                      El campo Telefono Movil no debe estar vacio
+                    </div>
+                    <div class="label-error" *ngIf="telefonocasa.errors['pattern']">
+                      El Telefono Movil no puede contener letras ni superar los 15 digitos o tener menos de 6 digitos
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="col-md-6">
+
+                <div class="form-group">
+                  <label>Número Documento</label>
+                  <span class="text-danger">*</span>
+                  <input type="text" class="form-control" (blur)="blurNumeroDocumento($event)" id="numerodocumento" formControlName="numerodocumento"
+                    placeholder="Número Documento ...">
+                  <div *ngIf="numerodocumento.invalid && (numerodocumento.dirty || numerodocumento.touched)">
+                    <div class="label-error" *ngIf="numerodocumento.errors['required']">
+                      El campo Número Documento no debe estar vacio
+                    </div>
+                    <div class="label-error" *ngIf="numerodocumento.errors['pattern']">
+                      El Número Documento no puede contener letras
+                    </div>
+                    <div class="label-error" *ngIf="numerodocumento.errors['existe']">
+                      El usuario ya se encuentra registrado en la base de datos
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label>Segundo Nombre</label>
+                  <input type="text" class="form-control" id="segundonombre" formControlName="segundonombre" placeholder="Segundo Nombre ...">
+                </div>
+
+                <div class="form-group">
+                  <label>Segundo Apellido</label>
+                  <input type="text" class="form-control" id="segundoapellido" formControlName="segundoapellido" placeholder="Segundo Apellido ...">
+                </div>
+
+                <div class="form-group">
+                  <label>Género</label>
+                  <span class="text-danger">*</span>
+                  <ng-select placeholder="Seleccione" id="genero" formControlName="genero" [options]="generos.items" [allowClear]="true">
+                  </ng-select>
+                  <div *ngIf="genero.invalid && (genero.dirty || genero.touched)">
+                    <div class="label-error" *ngIf="genero.errors['required']">
+                      El campo Género no debe estar vacio
+                    </div>
+                    <div class="label-error" *ngIf="genero.errors['pattern']">
+                      El Género no puede contener números
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Correo Electrónico</label>
+                  <span class="text-danger">*</span>
+                  <input type="text" class="form-control" id="correoelectronico" formControlName="correoelectronico" placeholder="EJEMPLO@CORREO.COM...">
+                  <div *ngIf="correoelectronico.invalid && (correoelectronico.dirty || correoelectronico.touched)">
+                    <div class="label-error" *ngIf="correoelectronico.errors['required']">
+                      El campo Correo Electrónico no debe estar vacio
+                    </div>
+                    <div class="label-error" *ngIf="correoelectronico.errors['pattern']">
+                      El Correo no cumple el formato
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Telefono Movil</label>
+                  <span class="text-danger">*</span>
+                  <input type="text" class="form-control" id="telefonomovil" formControlName="telefonomovil" placeholder="Telefono Movil ...">
+                  <div *ngIf="telefonomovil.invalid && (telefonomovil.dirty || telefonomovil.touched)">
+                    <div class="label-error" *ngIf="telefonomovil.errors['required']">
+                      El campo Telefono Movil no debe estar vacio
+                    </div>
+                    <div class="label-error" *ngIf="telefonomovil.errors['pattern']">
+                      El Telefono Movil no puede contener letras ni superar los 10 digitos o tener menos de 10 digitos
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+
+            </div>
+
+          </div>
+
+          <div class="box-footer">
+
+          </div>
+        </div>
+      </tab>
+
+      <tab heading="Información Académica">
+
+        <div class="box box-success">
+          <div class="box-header with-border">
+          </div>
+
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-6">
+
+                <div class="form-group" style="height: 100px">
+                  <label>Profesión</label>
+                  <ng-select placeholder="Seleccione" id="profesion" formControlName="profesion" [options]="lstProfesion" [allowClear]="true">
+                  </ng-select>
+                  <div *ngIf="profesion.invalid && (profesion.dirty || profesion.touched)">
+                    <div class="label-error" *ngIf="profesion.errors['required']">
+                      El campo Profesión no debe estar vacio
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="box box-success">
+
+          <div class="box-header with-border">
+            Estudios
+          </div>
+
+          <div class="box-body">
+
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="table-responsive">
+                  <table class="table table-hover table-condensed" [mfData]="lstEstudio" #mf="mfDataTable" [mfRowsOnPage]="5">
+                    <thead>
+                      <tr>
+                        <th class="col-md-2 header-grid">
+                          Tipo
+                        </th>
+                        <th class="col-md-2 header-grid">
+                          Descripción
+                        </th>
+                        <th class="col-md-2 header-grid">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let item of mf.data; let i = index;">
+                      <tr>
+                        <td>{{item.tipoestudio}} - {{ item.label }}</td>
+                        <td>{{item.descripcion}}</td>
+                        <td>
+                          <i (click)="removeRowClick(item)" class="glyphicon glyphicon-remove"></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr [formGroup]="frmEst" style="height: 100px">
+
+                        <td class="col-xs-4">
+                          <ng-select placeholder="Seleccione" id="tipoestudio" formControlName="tipoestudio" (selected)="setTipoEstudio($event)" [options]="lstTipoEstudio">
+                          </ng-select>
+                          <div *ngIf="tipoestudio.invalid && (tipoestudio.dirty || tipoestudio.touched)">
+                            <div class="label-error" *ngIf="tipoestudio.errors['required']">
+                              El campo Tipo Estudio no debe estar vacio
+                            </div>
+                          </div>
+                        </td>
+
+                        <td class="col-xs-4">
+                          <input id="descripcion" placeholder="Descripcion" class="form-control" formControlName="descripcion" name="descripcion" type="text">
+                          <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)">
+                            <div class="label-error" *ngIf="descripcion.errors['required']">
+                              El campo Descripción no debe estar vacio
+                            </div>
+                            <div class="label-error" *ngIf="descripcion.errors['pattern']">
+                              El Descripción no puede contener números
+                            </div>
+                          </div>
+                        </td>
+
+                        <td class="col-xs-2">
+                          <button id="addItemButton" type="button" [disabled]="!frmEst.valid" (click)="addItemClick();" class="btn btn-sm btn-success"
+                            tooltip="Agregar estudios." placement="top">
+                            <i class="glyphicon glyphicon-plus"></i>
+                          </button>
+                        </td>
+
+                      </tr>
+                      <tr>
+                        <td colspan="4">
+                          <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+      </tab>
+      <tab heading="Experiencia Laboral">
+
+
+        <div class="box box-success">
+
+          <div class="box-header with-border">
+
+          </div>
+
+          <div class="box-body">
+
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="table-responsive">
+                  <table class="table table-hover table-condensed" [mfData]="lstExpLab" #mf1="mfDataTable" [mfRowsOnPage]="5">
+                    <thead>
+                      <tr>
+                        <th class="col-md-2 header-grid">
+                          Entidad
+                        </th>
+                        <th class="col-md-2 header-grid">
+                          Cargo
+                        </th>
+                        <th class="col-md-2 header-grid">
+                          Fecha Inicio
+                        </th>
+                        <th class="col-md-2 header-grid">
+                          Fecha Fin
+                        </th>
+                        <th class="col-md-2 header-grid">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let item of mf1.data; let i = index;">
+                      <tr>
+                        <td>{{item.desentidad}}</td>
+                        <td>{{item.desccargo}}</td>
+                        <td>{{item.fechainicio | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{item.fechafin | date: 'dd/MM/yyyy'}}</td>
+                        <td>
+                          <i (click)="removeRowExpLabClick(item)" class="glyphicon glyphicon-remove"></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr [formGroup]="frmExpLab" style="height: 100px">
+
+                        <td class="col-xs-3">
+                          <ng-select placeholder="Seleccione" id="entidad" formControlName="entidad" (selected)="setEntidad($event)" [options]="lstEntidad">
+                          </ng-select>
+                          <div *ngIf="entidad.invalid && (entidad.dirty || entidad.touched)">
+                            <div class="label-error" *ngIf="entidad.errors['required']">
+                              El campo Entidad no debe estar vacio
+                            </div>
+                          </div>
+                        </td>
+
+                        <td class="col-xs-3">
+
+                          <ng-select placeholder="Seleccione" id="cargo" formControlName="cargo" (selected)="setCargo($event)" [options]="lstCargo">
+                          </ng-select>
+                          <div *ngIf="cargo.invalid && (cargo.dirty || cargo.touched)">
+                            <div class="label-error" *ngIf="cargo.errors['required']">
+                              El campo Cargo no debe estar vacio
+                            </div>
+                          </div>
+
+                        </td>
+
+                        <td class="col-xs-3">
+                          <input type="text" class="form-control" formControlName="fechainicio" placeholder="DD-MM-YYYY" #dp="bsDatepicker" bsDatepicker
+                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }">
+                          <div *ngIf="fechainicio.invalid && (fechainicio.dirty || fechainicio.touched)">
+                            <div class="label-error" *ngIf="fechainicio.errors['required']">
+                              El campo Fecha Inicio no debe estar vacio
+                            </div>
+                            <div class="label-error" *ngIf="fechainicio.errors['pattern']">
+                              La Fecha Inicio no puede contener números
+                            </div>
+                          </div>
+                        </td>
+
+                        <td class="col-xs-3">
+                          <input type="text" class="form-control" formControlName="fechafin" placeholder="DD-MM-YYYY" #dp="bsDatepicker" bsDatepicker
+                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }">
+                          <div *ngIf="fechafin.invalid && (fechafin.dirty || fechafin.touched)">
+                            <div class="label-error" *ngIf="fechafin.errors['required']">
+                              El campo Fecha Fin no debe estar vacio
+                            </div>
+                            <div class="label-error" *ngIf="fechafin.errors['pattern']">
+                              La Fecha Fin no puede contener números
+                            </div>
+                          </div>
+                        </td>
+
+                        <td class="col-xs-1">
+                          <button id="addItemButton" type="button" [disabled]="!frmExpLab.valid" (click)="addItemExpLabClick();" class="btn btn-sm btn-success"
+                            tooltip="Agregar experiencia laboral." placement="top">
+                            <i class="glyphicon glyphicon-plus"></i>
+                          </button>
+                        </td>
+
+                      </tr>
+                      <tr>
+                        <td colspan="4">
+                          <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </tab>
+
+      <tab heading="Soportes">
+
+        <div class="box box-success">
+          <div class="box-header with-border">
+          </div>
+
+          <div class="box-body">
+
+            <!--<app-carga></app-carga>-->
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+
+                </div>
+              </div>
+            </div>
+
+            <app-soporte-carga (fileSeleccionado)="obtenerFiles($event)"></app-soporte-carga>
+
+          </div>
+        </div>
+
+        <div class="box box-success" [hidden]="!isEdit">
+          <div class="box-header with-border">
+            Archivos cargados en el servidor
+          </div>
+
+          <div class="box-body">
+            <app-soporte-cargado [listOfloadedSoportes]="lstSoporteCargado"></app-soporte-cargado>
+          </div>
+        </div>
+
+
+      </tab>
+
+    </tabset>
+    <div class="margin pull-right">
+
+      <div class="btn-group">
+        <button class="btn btn-danger" (click)="cancelar()">
+          <span class="fa fa-close" aria-hidden="true"></span> Cancelar
+        </button>
+      </div>
+      <!--&nbsp;
+      <div class="btn-group">
+        <button class="btn btn-success" (click)="save()" [disabled]="!form.valid">
+          <span class="fa fa-save" aria-hidden="true"></span> Guardar
+        </button>
+      </div>-->
+      &nbsp;
+      <div class="btn-group">
+        <button class="btn btn-success" (click)="save()" [disabled]="!form.valid || loading">
+          <i [ngClass]="{ 'fa-save':!loading, 'fa-refresh fa-spin':loading }" class="fa"></i>
+          <span *ngIf="!loading"> Guardar</span>
+          <span *ngIf="loading"> Espere por favor</span>
+        </button>
+      </div>
+
+      <!--<ng-template #template>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Confirmación</h4>
+        </div>
+        <div class="modal-body">
+          Registro exitoso.
+        </div>
+      </ng-template>-->
+
+    </div>
+
+
+  </form>
+
+
+  <!--<div class="row">
+    <div class="col-xs-12 col-md-12">
+      <pre class="code-preview">{{form.valid}}</pre>
+      <pre class="code-preview">{{form.status}}</pre>
+      <pre class="code-preview">{{form.value | json}}</pre>
+    </div>
+  </div>-->
+
+</section>

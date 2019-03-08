@@ -1,0 +1,203 @@
+<section class="content-header">
+  <h1>
+    Examen
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a routerLink="/examen">
+        <i class="fa fa-user-md custom"></i> Examen médico</a>
+    </li>
+    <li class="active">Nuevo</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <form role="form" [formGroup]="form">
+
+    <tabset>
+      <tab heading="Datos Generales" id="tab1">
+        <div class="box box-success">
+
+          <div class="box-body">
+            <div class="row">
+
+              <div class="row">
+                <div class="col-md-6">
+                  <!--Buscador Hoja de vida-->
+                  <!--   <label>Buscar Hoja de Vida</label> -->
+                  <div class="box-header with-border">
+                    <div class="form-group">
+                      <h3 class="box-title">Buscar por Número de Documento</h3>
+                      <div class="input-group margin">
+                        <input type="text" class="form-control" id="identificacion" formControlName="identificacion" placeholder="Ingresar el número de cédula ...">
+                        <div *ngIf="identificacion.invalid && (identificacion.dirty || identificacion.touched)">
+                          <div class="label-error" *ngIf="identificacion.errors['pattern']">
+                            Formato no valido
+                          </div>
+                        </div>
+                        <span class="input-group-btn">
+                          <button type="button" (click)="buscarHojaVida()" class="btn btn-success btn-flat " [disabled]="!identificacion.valid">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="form-group">
+                    <label>Tipo de Documento</label>
+                    <input type="text" class="form-control" id="tipodocumento" formControlName="tipodocumento" placeholder="Tipo de documento ..."
+                      disabled>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Primer Nombre</label>
+                  <input type="text" class="form-control" id="primernombre" formControlName="primernombre" placeholder="Primer Nombre ..."
+                    disabled>
+                </div>
+
+                <div class="form-group">
+                  <label>Primer Apellido</label>
+                  <input type="text" class="form-control" id="primerapellido" formControlName="primerapellido" placeholder="Primer Apellido ..."
+                    disabled>
+                </div>
+
+                <div class="form-group">
+                  <label>Fecha Inicio</label>
+                  <input type="text" class="form-control" id="fechainiciocontrato" formControlName="fechainiciocontrato" placeholder="Fecha Inicio ..."
+                    disabled>
+                </div>
+
+                <div class="form-group">
+                  <label>Tipo Examen</label>
+                  <span class="text-danger">*</span>
+                  <ng-select placeholder="Seleccione" id="tipoexamen" formControlName="tipoexamen" [options]="datosTipoExamen" [allowClear]="true">
+                  </ng-select>
+                  <div *ngIf="tipoexamen.invalid && (tipoexamen.dirty || tipoexamen.touched)">
+                    <div class="label-error" *ngIf="tipoexamen.errors['required']">
+                      El campo Tipo Examen no debe estar vacío
+                    </div>
+                    <div class="label-error" *ngIf="tipoexamen.errors['pattern']">
+                      El Tipo Examen no puede contener números
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Número Documento</label>
+                  <input type="text" class="form-control" id="numerodocumento" formControlName="numerodocumento" placeholder="Número Documento ..."
+                    disabled>
+                </div>
+
+                <div class="form-group">
+                  <label>Segundo Nombre</label>
+                  <input type="text" class="form-control" id="segundonombre" formControlName="segundonombre" placeholder="Segundo Nombre ..."
+                    disabled>
+                </div>
+
+                <div class="form-group">
+                  <label>Segundo Apellido</label>
+                  <input type="text" class="form-control" id="segundoapellido" formControlName="segundoapellido" placeholder="Segundo Apellido ..."
+                    disabled>
+                </div>
+
+                <div class="form-group">
+                  <label>Fecha Fin</label>
+                  <input type="text" class="form-control" id="fechafincontrato" formControlName="fechafincontrato" placeholder="Fecha fin ..."
+                    disabled>
+                </div>
+
+                <div class="form-group">
+                  <label>Ips</label>
+                  <span class="text-danger">*</span>
+                  <ng-select placeholder="Seleccione" id="ips" formControlName="ips" [options]="lstIps" [allowClear]="true">
+                  </ng-select>
+                  <div *ngIf="ips.invalid && (ips.dirty || ips.touched)">
+                    <div class="label-error" *ngIf="ips.errors['required']">
+                      El campo Ips no debe estar vacío
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="box-footer">
+          </div>
+        </div>
+      </tab>
+    </tabset>
+
+    <div class="box box-success">
+      <div class="box-header with-border">
+        Recomendaciones
+      </div>
+      <div class="box-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Diagnóstico Principal</label>
+              <span class="text-danger">*</span>
+              <ng-select placeholder="Seleccione" id="cie" [options]="lstTipoDiagnostico" formControlName="cie">
+              </ng-select>
+              <div *ngIf="cie.invalid && (cie.dirty || cie.touched)">
+                <div class="label-error" *ngIf="cie.errors['required']">
+                  El campo Diagnostico Principal no debe estar vacío
+                </div>
+              </div>
+            </div>
+            <div class="btn-group">
+
+              <input #file name="file" type="file"  formControlName="archivo" style="display: none" (change)="onFileSelected($event)" accept=".pdf">
+
+              <button class="btn bg-olive btn-sm" (click)="file.click()" tooltip="Buscar Archivos." placement="top">
+                <span class="fa fa-folder-open" aria-hidden="true"></span> Examinar ...
+              </button> {{ selectedFile?selectedFile.name:'' }}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label> Recomendacion Médica</label>
+              <span class="text-danger">*</span>
+              <textarea id="descripcion" class="form-control" rows="1" formControlName="ciedescripcion" placeholder="..."></textarea>
+              <div *ngIf="ciedescripcion.invalid && (ciedescripcion.dirty || ciedescripcion.touched)">
+                <div class="label-error" *ngIf="ciedescripcion.errors['required']">
+                  El campo Recomendacion Médica no debe estar vacio
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+  <div class="margin pull-right">
+
+    <div class="btn-group">
+      <button class="btn btn-danger" (click)="cancelar()">
+        <span class="fa fa-close" aria-hidden="true"></span> Cancelar
+      </button>
+    </div>
+    &nbsp;
+    <div class="btn-group">
+      <button class="btn btn-success" (click)="guardar()" [disabled]="!form.valid || loading">
+          <i [ngClass]="{ 'fa-save':!loading, 'fa-refresh fa-spin':loading }" class="fa"></i>
+          <span *ngIf="!loading"> Guardar</span>
+          <span *ngIf="loading"> Espere por favor</span>
+        </button>
+        </div>
+  </div>
+
+  <!--<div class="row">
+    <div class="col-xs-12 col-md-12">
+      <pre class="code-preview">{{form.value | json}}</pre>
+    </div>
+  </div>-->
+</section>

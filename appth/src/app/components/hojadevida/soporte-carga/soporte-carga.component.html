@@ -1,0 +1,42 @@
+<input type="file" style="display: none;" #file (change)="onFileSelected($event)" id="file" class="form-control" name="file"
+  multiple>
+
+<button class="btn bg-olive btn-sm" (click)="file.click()" tooltip="Buscar Archivos." placement="top">
+  <span class="fa fa-folder-open" aria-hidden="true"></span> Examinar ...
+</button>
+
+<div class="modal-body">
+  <div class="box-body no-padding">
+    <div class="box-body table-responsive no-padding">
+      <table class="table table-bordered" [mfData]="lstFiles" #mf="mfDataTable" [mfRowsOnPage]="5">
+        <thead class="thead-dark">
+          <tr>
+            <th>Nombre</th>
+            <th>Tamaño</th>
+            <th>Tipo</th>
+            <th style="text-align: center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let det of mf.data; let i = index;">
+            <td>{{det.name}}</td>
+            <td>{{det.size / 1024 /1024 | number: '.2-2' }} MB</td>
+            <td>{{det.type}}</td>
+            <td style="text-align: center">
+              <button class="btn btn-danger btn-xs" (click)="removeRowClick(det)" tooltip="Eliminar Archivo." placement="top">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,416 @@
+<section class="content-header">
+  <h1>
+    Permisos
+    <small></small>
+  </h1>
+
+  <ol class="breadcrumb">
+    <li>
+      <a routerLink="/permiso">
+        <i class="fa fa-folder"></i> Permisos</a>
+    </li>
+    <li class="active">Nuevo</li>
+  </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+  <!--<div>
+    <div>-->
+
+  <!-- TITULO FORMULARIO -->
+  <div class="box box-default">
+
+    <!--Inicio de formularios-->
+    <form role="form" [formGroup]="form">
+      <!--Titulo formulario datos basicos-->
+      <div class="box-header with-border">
+        <h3 class="box-title" id="segmento">Datos Generales</h3>
+      </div>
+      <div class="box-body">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Buscar por Numero de Documento</label>
+            <div class="input-group margin">
+              <input type="text" class="form-control" id="identificacion" formControlName="identificacion" placeholder="Buscar por número de Identificación ...">
+              <div *ngIf="identificacion.invalid && (identificacion.dirty || identificacion.touched)">
+                <div class="label-error" *ngIf="identificacion.errors['required']">
+                  El campo Numero documento no debe estar vacío
+                </div>
+                <div class="label-error" *ngIf="identificacion.errors['pattern']">
+                  El Numero Documento no contiene un formato valido
+                </div>
+              </div>
+
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-success btn-flat" [disabled]="!identificacion.valid" (click)="buscaPermiso()">
+                  <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                  Buscar</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--contenido del formulario-->
+      <div class="box-body">
+        <!--inicio de fila-->
+        <div class="row">
+          <!--inicio de la columna-->
+          <div class="col-md-6">
+
+            <div class="form-group">
+              <label>Tipo de Documento</label>
+              <input type="text" class="form-control" id="tipodocumento" formControlName="tipodocumento" placeholder="Tipo de documento ..."
+                disabled>
+            </div>
+
+            <div class="form-group">
+              <label style="margin-right: 18px">Primer nombre </label>
+              <input type="text" class="form-control" id="primernombre" formControlName="primernombre" placeholder="Primer Nombre ..."
+                disabled>
+            </div>
+
+
+            <div class="form-group">
+              <label>Primer Apellido: </label>
+              <input type="text" class="form-control" id="primerapellido" formControlName="primerapellido" placeholder="Segundo Apellido ..."
+                disabled>
+            </div>
+
+            <div class="form-group">
+              <label>Cargo</label>
+              <input type="text" class="form-control" id="cargo" formControlName="cargo" placeholder="Cargo ..." disabled>
+            </div>
+
+
+            <div class="form-group">
+              <label>Categoria del Permiso</label>
+              <span class="text-danger">*</span>
+              <ng-select placeholder="Seleccione" id="tipocategoria" (selected)="selected($event)" formControlName="tipocategoria" [options]="listCategoria">
+              </ng-select>
+              <div *ngIf="tipocategoria.invalid && (tipocategoria.dirty || tipocategoria.touched)">
+                <div class="label-error" *ngIf="tipocategoria.errors['required']">
+                  La categoria no debe estar vacio
+                </div>
+                <div class="label-error" *ngIf="tipocategoria.errors['pattern']">
+                  La categoria no puede contener números
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+          <!--fin de la columna 1-->
+          <!--inicio de la comuna 2-->
+          <div class="col-md-6">
+
+            <div class="form-group">
+              <label>Número Documento </label>
+              <input type="text" class="form-control" id="numerodocumento" formControlName="numerodocumento" placeholder="Número Documento ..."
+                disabled>
+            </div>
+
+            <div class="form-group">
+              <label>Segundo Nombre</label>
+              <input type="text" class="form-control" id="segundonombre" formControlName="segundonombre" placeholder="Segundo Nombre ..."
+                disabled>
+            </div>
+
+            <div class="form-group">
+              <label>Segundo Apellido: </label>
+              <input type="text" class="form-control" id="segundopellido" formControlName="segundoapellido" placeholder="segundo Apellido ..."
+                disabled>
+            </div>
+
+            <div class="form-group">
+              <label>Area</label>
+              <input type="text" class="form-control" id="area" formControlName="area" placeholder="Area ..." disabled>
+            </div>
+
+            <div class="form-group">
+              <label>Tipo Permiso</label>
+              <span class="text-danger">*</span>
+              <ng-select placeholder="Seleccione" id="tipopermiso" formControlName="tipopermiso" [options]="listTipoPermiso">
+              </ng-select>
+              <div *ngIf="tipopermiso.invalid && (tipopermiso.dirty || tipopermiso.touched)">
+                <div class="label-error" *ngIf="tipopermiso.errors['required']">
+                  El campo tipo permiso no debe estar vacio
+                </div>
+                <div class="label-error" *ngIf="tipopermiso.errors['pattern']">
+                  El permiso no puede contener números
+                </div>
+              </div>
+            </div>
+
+            <br>
+            <!--fin del form-group 2-->
+          </div>
+          <!--fin de la columna 2-->
+        </div>
+        <!--fin de la fila-->
+      </div>
+      <!--fin del contenido del formulario solicitudes-->
+    </form>
+  </div>
+
+  <accordion>
+    <!--inicio del form-->
+    <form role="form" [formGroup]="formTemporal">
+      <div [hidden]="!flagForm">
+        <accordion-group heading="Solicitudes temporales" isOpen="true">
+          <!--Inicio segmento 2 Datos de solicitudes  de permiso-->
+          <!-- TITULO 2 SUBFORMULARIO  -->
+          <div class="box box-sucess">
+            <div class="box-body">
+              <!--inicio de fila-->
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Fecha</label>
+                  <div class="input-group">
+                   
+                    <!--<span class="text-danger">*</span>-->
+                    <span style="color:rgb(5, 150, 0)" class="input-group-addon"><i class="fa fa-calendar"></i>*</span>
+                    <input [(ngModel)]="fechaIni" [minDate]="minDate" type="text" class="form-control" formControlName="fecha" placeholder="mm/dd/yyyy"
+                      #dp="bsDatepicker" bsDatepicker>
+                    <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)">
+                      <div class="label-error" *ngIf="fecha.errors['required']">
+                        El campo Fecha no debe estar vacio
+                      </div>
+                      <div class="label-error" *ngIf="fecha.errors['pattern']">
+                        la Fecha no puede contener números
+                      </div>
+                    </div>
+                  </div>
+
+                  <!--inicio form-group2-->
+                  <div class="form-group">
+                    <label>Hora Inicio</label>
+                    <span class="text-danger">*</span>
+                    <!--<input type="time" class="form-control" id="horainicio" formControlName="horainicio">-->
+                    <timepicker [(ngModel)]="horaInicio"  (ngModelChange)="changedHoraInicio()"  [min]="horainicio" formControlName="horainicio"></timepicker>
+                    <div *ngIf="horainicio.invalid && (horainicio.dirty || horainicio.touched)">
+                      <div class="label-error" *ngIf="horainicio.errors['required']">
+                        La hora no debe estar vacio
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col-md-6">
+                  <!--inicio de col 2-->
+
+                  <div class="form-group">
+                    <label>Objetivo</label>
+                    <span class="text-danger">*</span>
+                    <textarea name="comment" formControlName="objetivo" id="objetivosoli" style="width: 100%;height: 32px"> </textarea>
+                  </div>
+
+                  <!--inicio form-group2-->
+                  <div class="form-group">
+                    <label>Hora Fin</label>
+                    <span class="text-danger">*</span>
+                    <!--<input type="time" class="form-control" id="horafin" formControlName="horafin">-->
+                    <timepicker [(ngModel)]="minTimeHoaraFin" formControlName="horafin" [min]="minTimeHoaraFin"></timepicker>
+                    <div *ngIf="horafin.invalid && (horafin.dirty || horafin.touched)">
+                      <div class="label-error" *ngIf="horafin.errors['required']">
+                        La hora no debe estar vacio
+                      </div>
+                    </div>
+                  </div>
+                  <!--fin del form-group 2-->
+
+
+
+                </div>
+                <!--ciere del body-->
+              </div>
+              <!--fin de la fila-->
+            </div>
+            <!--fin del contenido del formulario sol. temporales-->
+          </div>
+        </accordion-group>
+      </div>
+    </form>
+    <!--cerrar el form-->
+    <form role="form" [formGroup]="formDesplazamiento">
+      <div [hidden]="flagForm">
+        <accordion-group heading="solictudes desplazamiento" isOpen="true">
+          <div class="box box-success">
+            <div class="box-body">
+              <!--inicio de fila-->
+              <div class="row">
+                <!--inicio de la columna-->
+                <div class="col-md-6">
+                  <!--inicio form-group2-->
+                  <div class="form-group">
+                  <label>Fecha de Salida</label>
+                  <div class="input-group">
+                   <span  style="color:rgb(5, 150, 0)" class="input-group-addon"  ><i class="fa fa-calendar fa-1x"></i></span>
+                    <input type="text" [(ngModel)]="minFechaFin" class="form-control" [minDate]="minDate" formControlName="fechasolicitud" placeholder="mm/dd/yyyy" #dp="bsDatepicker"
+                      bsDatepicker>
+                    <div *ngIf="fechasolicitud.invalid && (fechasolicitud.dirty || fechasolicitud.touched)">
+                      <div class="label-error" *ngIf="fechasolicitud.errors['required']">
+                        El campo Fecha de salida no debe estar vacio
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  <!--fin del form-group 2-->
+                  <!--inicio form-group3 icon-home-->
+
+                  <div class="form-group">
+                    <label>Departamento Origen</label>
+                    <div class="input-group">
+                    <span  style="color:rgb(5, 150, 0)" class="input-group-addon"  ><i class="glyphicon glyphicon-home"></i></span>
+                     <ng-select [allowClear]="true" (selected)="selectedDeptoOrigen($event)" placeholder="Seleccione" id="deptoorigen" formControlName="deptoorigen"
+                      [options]="listDeptoOrigen">
+                    </ng-select>
+                    <div *ngIf="deptoorigen.invalid && (deptoorigen.dirty || deptoorigen.touched)">
+                      <div class="label-error" *ngIf="deptoorigen.errors['required']">
+                        El campo Departamento Origen no debe estar vacio
+                      </div>
+                    </div>
+                  </div>      
+                  </div>
+
+
+                  <div class="form-group">
+                    <label>Departamento Destino</label>
+                    <div class="input-group">
+                     <span  style="color:rgb(5, 150, 0)" class="input-group-addon"  ><i class="glyphicon glyphicon-list-alt"></i></span>
+                    <ng-select [allowClear]="true" (selected)="selectedDeptoDestino($event)" placeholder="Seleccione" id="deptodestino" formControlName="deptodestino"
+                      [options]="listDeptoDestino">
+                    </ng-select>
+                    <div *ngIf="deptodestino.invalid && (deptodestino.dirty || deptodestino.touched)">
+                      <div class="label-error" *ngIf="deptodestino.errors['required']">
+                        El campo Departamento Origen no debe estar vacio
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+
+                  <!--fin del form-group 3-->
+                  <!--inicio form-group4-->
+                 <!-- <div class="form-group"  > -->
+                    <div class="form-group">
+                    <label>Se solicita</label> 
+                  <div class="input-group">
+                      <span  style="color:rgb(5, 150, 0)" class="input-group-addon"  ><i class="glyphicon glyphicon-usd"></i></span>
+                    <ng-select [allowClear]="true" placeholder="Seleccione" id="confmpiodestino" formControlName="confmpiodestino" [options]="listConfMpioDestino">
+                    </ng-select>
+                    <div *ngIf="confmpiodestino.invalid && (confmpiodestino.dirty || confmpiodestino.touched)">
+                      <div class="label-error" *ngIf="confmpiodestino.errors['required']">
+                        El campo cargo no debe estar vacio
+                      </div>
+                      <div class="label-error" *ngIf="confmpiodestino.errors['pattern']">
+                        El cargo no puede contener números
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  <!--fin form-group4-->
+                </div>
+
+                <!--fin de columna -->
+                <div class="col-md-6 ">
+                  <!--inicio de col 2-->
+                  <!--inicio form-group 1-->
+                  <div class="form-group">
+                  <label>Fecha de regreso</label>
+                  <div class="input-group">
+                      <span   style="color: rgb(5, 150, 0)"  class="input-group-addon"><i class="fa fa-calendar fa-1x"></i></span>
+                      <input type="text"  [(ngModel)]="minFechaFin" class="form-control" [minDate]="minFechaFin" formControlName="fecharegreso" placeholder="mm/dd/yyyy" #dp="bsDatepicker"
+                        bsDatepicker>
+                      <div *ngIf="fecharegreso.invalid && (fecharegreso.dirty || fecharegreso.touched)">
+                        <div class="label-error" *ngIf="fecharegreso.errors['required']">
+                          El campo Fecha de regreso no debe estar vacio
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                
+
+                  <!--fin del form-group 1-->
+                  <!--inicio del form group 2-->
+                  <div class="form-group">
+                      <label>Municipio Origen</label>
+                      <div class="input-group">
+                     <span  style="color:rgb(5, 150, 0)" class="input-group-addon"  ><i class="glyphicon glyphicon-home"></i></span>
+                    <ng-select [allowClear]="true" placeholder="Seleccione" id="ciudadorigen" formControlName="ciudadorigen" [options]="listMpioOrigen">
+                    </ng-select>
+                    <div *ngIf="ciudadorigen.invalid && (ciudadorigen.dirty || ciudadorigen.touched)">
+                      <div class="label-error" *ngIf="ciudadorigen.errors['required']">
+                        El campo Municipio Origen no debe estar vacio
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+
+                  <div class="form-group">
+                     <label>Municipio Destino</label>
+                     <div class="input-group">
+                      <span  style="color:rgb(5, 150, 0)" class="input-group-addon"  ><i class="glyphicon glyphicon-list-alt"></i></span>
+                    <ng-select [allowClear]="true" (selected)="selectedConfMunDestino($event)" placeholder="Seleccione" id="ciudaddestino" formControlName="ciudaddestino"
+                      [options]="listMpioDestino">
+                    </ng-select>
+                    <div *ngIf="ciudaddestino.invalid && (ciudaddestino.dirty || ciudaddestino.touched)">
+                      <div class="label-error" *ngIf="ciudaddestino.errors['required']">
+                        El campo cargo no debe estar vacio
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Objetivo</label>
+                    <textarea id="objetivodes" formControlName="objetivodes" class="form-control" name="comment" style="width: 100%" placeholder="Enter"> </textarea>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </accordion-group>
+      </div>
+    </form>
+  </accordion>
+  <!--botonera-->
+  <div class="margin pull-right">
+    <div class="btn-group">
+      <button class="btn btn-danger" (click)="cancelar()">
+        <span class="fa fa-close" aria-hidden="true"></span> Cancelar
+      </button>
+    </div>&nbsp;
+    <div class="btn-group">
+      <button class="btn btn-success" (click)="guardar()">
+        <span class="fa fa-save" aria-hidden="true"></span> Guardar
+      </button>
+    </div>
+  </div>
+
+  <br/>
+  <br/>
+
+  <!--fin de botonera-->
+  <!--<div class="row">
+    <div class="col-xs-12 col-md-12">
+      <pre class="code-preview">{{formDesplazamiento.value | json}}</pre>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-12">
+      <pre class="code-preview">{{form.value | json}}</pre>
+    </div>
+  </div>-->
+  <!--fin del modulo-->
+  <!--</div>-->
+  <!--</div>-->
+</section>

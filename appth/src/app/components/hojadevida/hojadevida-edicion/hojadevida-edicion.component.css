@@ -1,0 +1,18 @@
+/*Clase utilizada en las vistas de los catalogos para dar formato al titulo */
+.tituloCatalogo{
+    font-size: 10pt; 
+    text-align: center; 
+    font-weight: bold; 
+    color: #000000
+}
+
+
+:host >>> .tooltip-inner {
+  background-color: #d2d6de;
+  color: #555;
+}
+:host >>> .tooltip.top .tooltip-arrow:before,
+:host >>> .tooltip.top .tooltip-arrow {
+  border-top-color: #d2d6de;
+}      
+    

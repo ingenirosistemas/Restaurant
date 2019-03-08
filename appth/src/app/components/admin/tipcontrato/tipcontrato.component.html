@@ -1,0 +1,101 @@
+<section class="content-header">
+    <h1>
+        Tipo de contratos
+        <small>Listado</small>
+    </h1>
+
+</section>
+
+
+<section class="content">
+
+    <div class="box-header with-border">
+        <div class="margin pull-right">
+            <div class="btn-group">
+                <button class="btn btn-success">
+          <span class="fa fa-plus-square" aria-hidden="true"></span> Nuevo</button>
+            </div>
+        </div>
+    </div>
+    <form>
+        <accordion>
+            <accordion-group heading="Búsqueda avanzada">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Código</label>
+                                <div class="col-sm-9">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Descripción</label>
+                                <div class="col-sm-9">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="margin pull-right">
+                        <button type="button" class="btn btn-primary">
+              <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+              Buscar
+            </button>
+                    </div>
+                </div>
+            </accordion-group>
+        </accordion>
+    </form>
+    <div class="box box-success">
+        <div class="box-header">
+            <h3 class="box-title"></h3>
+            <div class="box-tools">
+            </div>
+        </div>
+        <div class="box-body no-padding">
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-bordered table-striped dataTable" [mfData]="listaArls" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%;text-align: center">
+                                ID
+                            </th>
+                            <th style="width: 10%;text-align: center">
+                                Código
+                            </th>
+                            <th style="width: 10%;text-align: center">
+                                Descripción
+                            </th>
+                            <th style="width: 5%;text-align: center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of mf.data;let i = index">
+                            <td style="text-align: center">{{ item.id }}</td>
+                            <td style="text-align: center">{{ item.codigo }}</td>
+                            <td style="text-align: center">{{ item.descripcion }}</td>
+                            <td style="width: 5%;text-align: center">
+
+                                <button type="button" tooltip="Editar Arl." placement="top" class="btn btn-warning btn-xs">
+                  <i class="fa fa-pencil"></i>
+                </button>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="8">
+                                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</section>

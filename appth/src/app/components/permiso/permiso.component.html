@@ -1,0 +1,231 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Permisos
+    <small>Listado</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a href="./dashboard">
+        <i class="fa fa-dashboard"></i> Inicio</a>
+    </li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+
+  <!--<app-loading  *ngIf="loading"></app-loading>-->
+
+  <div class="box-header with-border">
+    <div class="margin pull-right">
+      <div class="btn-group">
+        <button class="btn btn-success" (click)="nuevo()">
+          <span class="fa fa-plus-square" aria-hidden="true"></span> Nuevo</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!--<div>
+     <tabset>
+    <tab heading= "permisos temporales" id="tab1">-->
+  <form [formGroup]="form" (keydown.enter)="$event.preventDefault()">
+    <accordion>
+      <accordion-group heading="Búsqueda avanzada">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Número de Documento  </label>
+                <div class="col-sm-6">
+               
+                  <input formControlName="numerodocumento" type="text" class="form-control" name="documento" id="documento" placeholder="Digite documento" 
+                    (keydown.enter)="buscarPermiso()"> 
+                    <!--<span class="glyphicon glyphicon-search form-control-feedback"></span>
+                     kk-->
+                  <div *ngIf="numerodocumento.invalid && (numerodocumento.dirty || numerodocumento.touched)">
+                    <div class="label-error" *ngIf="numerodocumento.errors['required']">
+                      El Número de Documento debe tener al menos 7 caracteres de largo.
+                    </div>
+                    <div class="label-error" *ngIf="numerodocumento.errors['maxlength']">
+                      El Número de Documento solo debe tener 11 caracteres de largo.
+                    </div>
+                    <div class="label-error" *ngIf="numerodocumento.errors['pattern']">
+                      El Formato es Incorrecto.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Nombre Completo</label>
+                <div class="col-sm-9">
+                  <input formControlName="nombrecompleto" type="text" class="form-control" name="name" id="name" placeholder="Digite nombre"
+                    (keydown.enter)="buscarPermiso()">
+                  <div *ngIf="nombrecompleto.invalid && (nombrecompleto.dirty || nombrecompleto.touched)">
+                    <div class="label-error" *ngIf="nombrecompleto.errors['required']">
+                      El campo Numero documento no debe estar vacío
+                    </div>
+                    <div class="label-error" *ngIf="nombrecompleto.errors['pattern']">
+                      El Numero Documento no contiene un formato valido
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="box-footer">
+            <div class="margin pull-right">
+              <button type="button" class="btn btn-primary" (click)="buscarPermiso()" [disabled]="!form.valid">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                Buscar
+              </button>
+            </div>
+          </div>
+        </div>
+      </accordion-group>
+    </accordion>
+  </form>
+
+  <div class="box box-success">
+    <div class="box-header">
+      <h3 class="box-title"></h3>
+      <div class="box-tools">
+      </div>
+    </div>
+
+    <!--FIN TABLA DE RESULTADOS DE PERMISOS TEMPORALES-->
+    <!--TABLA DE RESULTADOS DE LABORAR FIN DE SEMANA-->
+    <div class="box-body no-padding">
+      <div class="box-body table-responsive no-padding">
+        <table class="table table-bordered table-striped dataTable" [mfData]=" lstPermiso" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage">
+          <thead>
+            
+            <tr>
+              <!--<th style="width: 5%;text-align: center">#</th>-->
+              <th style="width: 6%;text-align: center">
+                Número de Documento
+              </th>
+              <th style="width: 6%;text-align: center">
+                Nombre completo
+              </th>
+              <th style="width: 6%;text-align: center">
+                Categoria del Permiso
+              </th>
+              <th style="width: 6%;text-align: center">
+                Tipo permiso
+              </th>
+              <th style="width: 6%;text-align: center">
+                Objetivo
+              </th>
+              <th style="width: 6%;text-align: center">
+                Fecha
+              </th>
+
+              <th style="width: 6%;text-align: center">
+                Salida
+              </th>
+              <th style="width: 6%;text-align: center">
+                Regreso
+              </th>
+              <th style="width: 6%;text-align: center">
+                Municipio Origen
+              </th>
+              <th style="width: 6%;text-align: center">
+                Municipio Destino
+              </th>
+              <th style="width: 6%;text-align: center">
+                Autoriza
+               <!-- <i class="glyphicon glyphicon-check"></i>
+                <button type="button" class="btn btn-primary" (click)="openModal(template)">Create template modal</button>-->
+                <ng-template #template>
+                  <div class="modal-header" class="modal-header bg-success border-radius" >
+                    <h4 class="modal-title pull-left">confirmar permiso para</h4>
+                    <button type="button" class="close pull-right" aria-label="Cerrar" (click)="modalRef.hide()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body" >
+                      
+                      <input type="checkbox"  id="my-check"  (change)="onChange($event)" [checked]="checkModel" />
+                      <label for="my-check">Lider proceso</label><br>
+                      <input type="checkbox"  id="my-check1"  (change)="onChange($event)" [checked]="checkModel1" />
+                      <label for="my-check">Coordinador de Area</label> <br>
+
+                      <!--<input type="checkbox"  id="my-check2"  (change)="onChange($event)" [checked]="checkModel2" />
+                      <label for="my-check">Coordinador politico</label><br>
+                      <input type="checkbox"  id="my-check3"  (change)="onChange($event)" [checked]="checkModel2" />
+                      <label for="my-check">Talento Humano</label><br> -->
+                    
+                  </div>
+
+                  <div class="modal-body" class="modal-header bg-success border-radius.disabled" >
+                       <button type="button" class="btn btn-primary" (click)="modalRef.hide()">cerrar</button>
+                       <button type="button" class="btn btn-primary">Guardar</button>
+                     </div>
+                       
+                  
+
+                </ng-template>
+
+              </th>
+
+              <th style="width: 6%;text-align: center" class="col-xs-2 col-md-2"> 
+                <!--<i class="glyphicon glyphicon-trash"></i>-->
+                Acciónes
+              </th>
+            </tr>
+          </thead>
+          <tbody >
+             
+            <tr *ngFor="let resultado of mf.data;let i = index"  >
+             
+              <td style="text-align: center">
+                <span class="badge bg-green">{{ resultado.documento }} {{ resultado.tipodocumento }}</span>
+              </td>
+              <td style="text-align: center">{{ resultado.primernombre }} {{ resultado.primerapellido }}</td>
+              <td style="text-align: center">{{ resultado.categoria }}</td>
+              <td style="text-align: center">{{ resultado.tipopermiso }}</td>
+              <td style="text-align: left">{{ resultado.objetivo }}</td>
+              <td style="text-align: center">{{ resultado.fecha}}</td>
+              <td style="text-align: center">{{ resultado.codcategoria == '002'?resultado.fechasalida:resultado.horainicio }}</td>
+              <td style="text-align: center">{{ resultado.codcategoria == '002'?resultado.fecharegreso:resultado.horafin }}</td>
+              <td style="text-align: center">{{ resultado.municipioorigen }}</td>
+              <td style="text-align: center">{{ resultado.municipidestino }}</td>
+              <td  style="text-align: left"  >
+              <button type="button" style="color:rgb(5, 150, 0)" class="btn btn-primary" (click)="openModal(template)" class="btn btn-default btn-sm" >Autorizar
+              <span style="color:verde"><i class="glyphicon glyphicon-check"></i></span>
+              </button>
+              
+              </td>
+
+              <td style="text-align: center" >
+                <!--"glyphicon glyphicon-remove" // fa fa-check-square-o
+                 <i  (click)="removeRowPermisoClick(resultado)" class="glyphicon glyphicon-trash" style="#d9534f"></i> -->
+                  <button type="button" style="color:rgb(5, 150, 0)" (click)="removeRowPermisoClick(resultado)" class="btn btn-default btn-xs"  >
+                 <!-- <span class="glyphicon glyphicon-trash" style="color:white" ></span>-->
+                  <span style="color:verde"><i class="glyphicon glyphicon-trash"></i></span>
+                  </button>
+                                
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="5">
+                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+    <!--FIN TABLA DE LABORAR FIN DE SEMANA-->
+  </div>
+ 
+</section>

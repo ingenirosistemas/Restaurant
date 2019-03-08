@@ -1,0 +1,34 @@
+<div class="input-group">
+  <input
+    style="z-index: 0"
+    class="form-control"
+    placeholder="dd/mm/aaaa"
+    [textMask]="{mask: mask}"
+    [(ngModel)]="val"
+    type="text"
+    [readonly]="inhabilitado"
+  />
+  <span class="input-group-btn">
+    <button
+      tabindex="-1"
+      class="btn btn-default"
+      type="button"
+      (click)="onClickCalendar()"
+      [disabled]="inhabilitado"
+      ><span class="glyphicon glyphicon-calendar"></span>
+    </button>
+    <div *ngIf="visible" class="datepicker-wrapper">
+      <datepicker   style="
+        color: #fff !important;
+        background-color: #a7d531 !important;
+        border-color: #56bc26 !important;"
+   
+        [(ngModel)]="dt"
+        [showWeeks]="true"
+        [minDate]="minDate"
+        [maxDate]="maxDate"
+        (selectionDone)="onSelectedFecha()">
+      </datepicker>
+    </div>
+  </span>
+</div>

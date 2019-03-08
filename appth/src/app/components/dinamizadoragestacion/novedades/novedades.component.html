@@ -1,0 +1,126 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Historial de novedades
+    <small>Listado</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a href="./dashboard">
+        <i class="fa fa-dashboard"></i> Inicio</a>
+    </li>
+  </ol>
+</section>
+
+
+
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="box box-success">
+
+    <div class="box-body">
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="table-responsive">
+            <table class="table table-hover table-condensed" [mfData]="lstNovedades" #mf="mfDataTable" [mfRowsOnPage]="5">
+              <thead>
+                <tr>
+                  <th class="col-md-2 header-grid">
+                    Novedad
+                  </th>
+                  <th class="col-md-2 header-grid">
+                    Fecha
+                  </th>
+                  <th class="col-md-2 header-grid">
+                    Archivo
+                  </th>
+                  <th class="col-md-2 header-grid">Acciones
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let item of mf.data; let i = index;">
+                <tr>
+                  <td>{{ item.label }}</td>
+                  <td>{{ item.fecha | date: 'dd/MM/yyyy' }}</td>
+                  <td>{{ item.archivo }}</td>
+                  <td>
+                    <i (click)="removeRowClick(item)" class="glyphicon glyphicon-remove" style="cursor: pointer;" title="Eliminar"></i>&nbsp;
+                    <i (click)="dowload(item.archivo)" class="glyphicon glyphicon-download-alt" style="cursor: pointer;" title="Descargar"></i>
+
+                  </td>
+                </tr>
+              </tbody>
+
+              <tfoot>
+                <tr [formGroup]="form" style="height: 100px">
+                  <td class="col-xs-4">
+                    <ng-select style="z-index: 1000;" placeholder="Seleccione" id="novedad" formControlName="novedad" (selected)="setNovedad($event)"
+                      [options]="lstCatNovedad">
+                    </ng-select>
+                    <div *ngIf="novedad.invalid && (novedad.dirty || novedad.touched)">
+                      <div class="label-error" *ngIf="novedad.errors['required']">
+                        El campo Novedad no debe estar vacio
+                      </div>
+                    </div>
+                  </td>
+
+                  <td class="col-xs-4">
+                    <input type="text" class="form-control" formControlName="fecha" placeholder="DD-MM-YYYY" #dp="bsDatepicker" bsDatepicker
+                      [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }">
+
+                    <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)">
+                      <div class="label-error" *ngIf="fecha.errors['required']">
+                        El campo Fecha no debe estar vacio
+                      </div>
+                      <div class="label-error" *ngIf="fecha.errors['pattern']">
+                        La Fecha no puede contener números
+                      </div>
+                    </div>
+                  </td>
+
+                  <td class="col-xs-4">
+                    <input type="file" #file name="file" formControlName="file" (change)="onFileSelected($event)" class="form-control" accept=".pdf">
+                    <div *ngIf="file.invalid && (file.dirty || file.touched)">
+                      <div class="label-error" *ngIf="file.errors['required']">
+                        El campo Archivo no debe estar vacio
+                      </div>
+                      <div class="label-error" *ngIf="file.errors['pattern']">
+                        La Archivo no puede contener números
+                      </div>
+                    </div>
+                  </td>
+
+                  <td class="col-xs-2">
+
+                    <button class="btn btn-sm btn-success" (click)="addItemClick();" [disabled]="!form.valid || loading">
+                      
+                      <i [ngClass]="{ 'fa-plus':!loading, 'fa-refresh fa-spin':loading }" class="fa"></i>
+                      
+
+                      <!--<span *ngIf="!loading"> </span>-->
+                      <span *ngIf="loading"> Espere por favor</span>
+
+
+                    </button>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                      <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                    </td>
+                  </tr>
+              </tfoot>
+
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>

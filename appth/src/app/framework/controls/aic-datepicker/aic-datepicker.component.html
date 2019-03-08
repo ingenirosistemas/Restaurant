@@ -1,0 +1,18 @@
+<h3>Fecha de consulta</h3>
+<div class="row">
+  <div class="col-xs-6 col-6 col-md-4 form-group" *ngIf="opcion === 'U'">
+    <input type="text"
+           class="form-control"
+           [minDate]="minDate"
+           [maxDate]="maxDate"
+           #dp="bsDatepicker"
+           bsDatepicker 
+           [(bsValue)]="fecha">
+  </div>  
+
+  <div class="col-xs-6 col-6 col-md-4 form-group" *ngIf="opcion === 'M'">
+      <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [(ngModel)]="bsRangeValue"  [maxDate]="maxDate">
+  </div>    
+
+  <button class="btn btn-success" (click)="buscar()">Buscar</button>
+</div>

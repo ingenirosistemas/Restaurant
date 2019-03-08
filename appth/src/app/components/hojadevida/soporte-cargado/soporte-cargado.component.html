@@ -1,0 +1,41 @@
+<div class="modal-body">
+  <div class="box-body no-padding">
+    <div class="box-body table-responsive no-padding">
+      <table class="table table-bordered" [mfData]="listOfloadedSoportes" #mf="mfDataTable" [mfRowsOnPage]="5">
+        <thead class="thead-dark">
+          <tr>
+            <th style="text-align: center">
+              <i class="fas fa-key"></i>
+            </th>
+            <th>Nombre</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let det of mf.data; let i = index;">
+            <td style="text-align: center">{{det.id}}</td>
+            <td>{{det.nombre}}</td>
+            <td style="width: 2%;">
+              <button class="btn btn-primary btn-xs" (click)="dowload(det.nombre)" tooltip="Descargar Archivo del Servidor." placement="top">
+                <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+              </button>
+            </td>
+            <td style="width: 2%;">
+              <button class="btn btn-danger btn-xs" (click)="delete(det)" tooltip="Eliminar Archivo del Servidor." placement="top">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

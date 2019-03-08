@@ -1,0 +1,154 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Exámenes médicos
+    <small>Listado</small>
+  </h1>
+  <!--<ol class="breadcrumb">
+    <li>
+      <a href="./dashboard">
+        <i class="fa fa-dashboard"></i> Inicio</a>
+    </li>
+  </ol>-->
+</section>
+
+
+<!-- Main content -->
+|
+<section class="content">
+
+  <!--<app-loading *ngIf="loading"></app-loading> -->
+
+  <div class="box-header with-border">
+    <div class="margin pull-right">
+      <div class="btn-group">
+        <button class="btn btn-success" (click)="nuevo()">
+          <span class="fa fa-plus-square" aria-hidden="true"></span> Nuevo</button>
+      </div>
+    </div>
+  </div>
+  <form [formGroup]="form" (keydown.enter)="$event.preventDefault()">
+    <accordion>
+      <accordion-group heading="Búsqueda avanzada">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Número Documento</label>
+                <div class="col-sm-9">
+                  <input formControlName="numerodocumento" type="text" class="form-control" name="documento" id="documento" placeholder="documento"
+                    (keydown.enter)="buscarExamen()">
+                  <div *ngIf="numerodocumento.invalid && (numerodocumento.dirty || numerodocumento.touched)">
+                    <div class="label-error" *ngIf="numerodocumento.errors['minlength']">
+                      El Número de Documento debe tener al menos 7 caracteres de largo.
+                    </div>
+                    <div class="label-error" *ngIf="numerodocumento.errors['maxlength']">
+                      El Número de Documento solo debe tener 11 caracteres de largo.
+                    </div>
+                    <div class="label-error" *ngIf="numerodocumento.errors['pattern']">
+                      El Formato es Incorrecto.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Nombre Completo</label>
+                <div class="col-sm-9">
+                  <input formControlName="nombrecompleto" type="text" class="form-control" name="name" id="name" placeholder="Digíte nombre"
+                    (keydown.enter)="buscarExamen()">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box-footer">
+          <div class="margin pull-right">
+            <button type="button" class="btn btn-primary" [disabled]="!form.valid" (click)="buscarExamen()">
+              <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+              Buscar
+            </button>
+          </div>
+        </div>
+      </accordion-group>
+    </accordion>
+  </form>
+  <div class="box box-success">
+    <div class="box-header">
+      <h3 class="box-title"></h3>
+      <div class="box-tools">
+      </div>
+    </div>
+    <div class="box-body no-padding">
+      <div class="box-body table-responsive no-padding">
+        <table class="table table-bordered table-striped dataTable" [mfData]="lstExamen" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage">
+          <thead>
+            <tr>
+              <!--<th style="width: 5%;text-align: center">#</th>-->
+              <th style="width: 10%;text-align: center">
+                Tipo Documento
+              </th>
+              <th style="width: 10%;text-align: center">
+                Número Documento
+              </th>
+              <th style="width: 10%;text-align: center">
+                Nombre Completo
+              </th>
+              <th style="width: 10%;text-align: center">
+                Nombre Clínica
+              </th>
+              <th style="width: 10%;text-align: center">
+                Tipo Examen
+              </th>
+              <th style="width: 10%;text-align: center">
+                Diagnóstico
+              </th>
+              <th style="width: 1%;text-align: center">
+                Archivo
+              </th>
+              <th style="width: 1%;text-align: center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let resultado of mf.data;let i = index">
+              <td style="text-align: center">{{ resultado.tipodocumento }}</td>
+              <td style="text-align: center">
+                <span class="badge bg-green">{{ resultado.documento }}</span>
+              </td>
+              <td style="text-align: center">{{ resultado.primernombre }} {{ resultado.primerapellido }}</td>
+              <td style="text-align: center">{{ resultado.ips }}</td>
+              <td style="text-align: center">{{ resultado.tipoexamen }}</td>
+              <td style="text-align: center">{{ resultado.cie }}</td>
+
+              <td style="text-align: center">
+
+                <div [hidden]="!resultado.archivo">
+                  <button id="addItemButton" type="button" class="btn btn-primary btn-xs" tooltip="Descargar Archivo." placement="top"
+                    (click)="dowload(resultado.archivo)">
+                    <span class="fa fa-download" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </td>
+              <td style="text-align: center">
+                <button class="btn btn-warning btn-xs" tooltip="Editar Registro." placement="top" (click)="contratoSelectOnClick(resultado,i);">
+                  <span class="btn-label">
+                    <i class="fa fa-pencil"></i>
+                  </span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="8">
+                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</section>

@@ -1,0 +1,39 @@
+<div class="modal-body">
+    <div class="box-body no-padding">
+      <div class="box-body table-responsive no-padding">
+        <table class="table table-bordered" [mfData]="listEstudios" #mf="mfDataTable" [mfRowsOnPage]="5">
+          <thead class="thead-dark">
+            <tr>
+              <th style="text-align: center">
+                <i class="fas fa-key"></i>
+              </th>
+              <th>Nivel</th>
+              <th>Titulo</th>
+              <th>Soporte Titulo</th>
+              <th>Estado</th>
+              <th>Fecha Grado</th>
+              <th>Institución</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let det of mf.data; let i = index;">
+              <td style="text-align: center">{{det.id}}</td>
+              <td>{{det.nivel}}</td>
+              <td>{{det.titulo}}</td>
+              <td>{{det.soporte_titulo}}</td>
+              <td>{{det.estado}}</td>
+              <td>{{det.fecha_grado}}</td>
+              <td>{{det.institucion}}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4">
+                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>

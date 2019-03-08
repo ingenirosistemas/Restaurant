@@ -1,0 +1,28 @@
+.datepicker-wrapper, .btn-info.active, .btn-info:active, .open>.dropdown-toggle.btn-info {
+    float: left;
+    position: relative;
+    z-index: 100;
+    margin-left: -303px;
+    top: 1px;
+     background-color: #fff !important;
+    border-color: #fff !important;
+}
+
+.datepicker-wrapper{
+    position: absolute;
+    background-color: #5cb85c;
+}
+
+.datepicker-wrapper.btn{
+    position: absolute;
+    background-color: #5cb85c;
+}
+
+
+.btn{
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #5cb85c;
+
+}
+

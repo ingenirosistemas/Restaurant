@@ -1,0 +1,279 @@
+<section class="content-header">
+  <h1>
+    Gestantes
+    <small></small>
+  </h1>
+
+</section>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="box box-default">
+
+
+    <form role="form" [formGroup]="formb">
+      <!--<tabset>-->
+      <div class="box box-success">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-6">
+              <!--Buscador dinzamizadora-->
+              <!--   <label>Buscar dinamizadora</label> -->
+              <div class="box-header with-border">
+                <h3 class="box-title">Buscar Gestantes</h3>
+                <div class="input-group margin">
+                  <input type="text" class="form-control" id="identificacion" formControlName="identificacion" placeholder="Buscar por número de Identificación ...">
+                  <div *ngIf="identificacion.invalid && (identificacion.dirty || identificacion.touched)">
+                    <div class="label-error" *ngIf="identificacion.errors['required']">
+                      El campo buscar no debe estar vacio
+                    </div>
+                    <div class="label-error" *ngIf="identificacion.errors['pattern']">
+                      Formato no valido
+                    </div>
+                    <div class="label-error" *ngIf="identificacion.errors['existe']">
+                      El usuario ya se encuentra registrado en gestantes.
+                    </div>
+                  </div>
+
+                  <span class="input-group-btn">
+                    <button type="button" (click)="buscaEmbarazoActual()" class="btn btn-success btn-flat " [disabled]="!identificacion.valid">
+                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--label primer Nombre-->
+          <div class="col-md-6 ">
+            <div class="form-group">
+              <div class="form-group">
+                <label>Primer Nombre</label>
+                <input type="text" class="form-control" id="primernombre" formControlName="primernombre" placeholder="Primer Nombre..." [attr.disabled]="true">
+              </div>
+            </div>
+          </div>
+          <!--label Segundo Nombre-->
+          <div class="col-md-6 ">
+            <div class="form-group">
+              <div class="form-group">
+                <label>Segundo Nombre</label>
+                <input type="text" class="form-control" id="segundonombre" formControlName="segundonombre" placeholder="Segundo Nombre..."
+                  [attr.disabled]="true">
+              </div>
+            </div>
+          </div>
+          <!--Primer Apellido -->
+          <div class="col-md-6 ">
+            <div class="form-group">
+              <div class="form-group">
+                <label>Primer Apellido</label>
+                <input type="text" class="form-control" id="primerapellido" formControlName="primerapellido" placeholder="Primer Apellido ..."
+                  [attr.disabled]="true">
+              </div>
+            </div>
+          </div>
+          <!--Segundo Apellido -->
+          <div class="col-md-6 ">
+            <div class="form-group">
+              <div class="form-group">
+                <label>Segundo Apellido</label>
+                <input type="text" class="form-control" id="segundoapellido" formControlName="segundoapellido" placeholder="Segundo Apellido ..."
+                  [attr.disabled]="true">
+              </div>
+            </div>
+          </div>
+          <!--Tipo documento-->
+          <div class="col-md-6 ">
+            <div class="form-group">
+              <div class="form-group">
+                <label>Tipo de Documento</label>
+                <input type="text" class="form-control" id="tipodocumento" formControlName="tipodocumento" placeholder="Tipo de documento ..."
+                  [attr.disabled]="true">
+              </div>
+            </div>
+          </div>
+
+          <!--Número documento-->
+          <div class="col-md-6 ">
+            <div class="form-group">
+              <div class="form-group">
+                <label>Número de Documento</label>
+                <input type="text" class="form-control" id="numerodocumento" formControlName="numerodocumento" placeholder="Número de documento ..."
+                  [attr.disabled]="true">
+              </div>
+            </div>
+          </div>
+
+          <!--cargo-->
+          <div class="col-md-6 ">
+            <div class="form-group">
+              <div class="form-group">
+                <label>Cargo</label>
+                <input type="text" class="form-control " id="cargo" formControlName="cargo" placeholder="Cargo ..." [attr.disabled]="true">
+              </div>
+            </div>
+          </div>
+
+          <!--cargo-->
+          <div class="col-md-6 ">
+            <div class="form-group">
+              <div class="form-group">
+                <label>Área</label>
+                <input type="text" class="form-control " id="Area" formControlName="area" placeholder="area ..." [attr.disabled]="true">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- fin buscador -->
+  <div class="box box-default">
+
+    <form role="form" [formGroup]="form">
+
+      <!--Inicio de formularios-->
+      <!--contenido del formulario incapacidades-->
+      <div class="box-body">
+        <!--inicio de fila-->
+        <div class="row">
+
+          <!--inicio de la columna-->
+          <div class="col-md-6">
+
+            <!-- inicio form-grup1 -->
+            <div class="form-group">
+              <label>Fecha probable del parto*</label>
+              <div class="input-group">
+                <span style="color: rgb(5, 150, 0)" class="input-group-addon">
+                  <i class="fa fa-calendar fa-1x"></i>
+                </span>
+                <input type="text" class="form-control" id="fechaparto" formControlName="fechaparto" name="fechafin" placeholder="mm/dd/yyyy"
+                  [minDate]="minDate" #dp="bsDatepicker" bsDatepicker>
+                <div *ngIf="fechaparto.invalid && (fechaparto.dirty || fechaparto.touched)">
+                  <div class="label-error" *ngIf="fechaparto.errors['required']">
+                    El campo fecha probable del parto no debe estar vacio
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+            <!-- fin  from-grup  -->
+            <!-- inicio form-grup2 -->
+            <div class="form-group">
+              <div>
+                <label for="up">Epicrisis</label>
+                <span class="text-danger">*</span>
+              </div>
+              <div>
+                <input type="file" #file name="file" class="form-control" (change)="onFileSelected($event)" accept=".pdf">
+              </div>
+            </div>
+            <!-- fin  from-grup  -->
+          </div>
+          <!--fin de la columna 1-->
+
+
+
+          <!--inicio de la comuna 2-->
+
+          <div class="col-md-6">
+
+            <div class="form-group">
+              <label>Fecha Fur*</label>
+              <div class="input-group">
+                <span style="color: rgb(5, 150, 0)" class="input-group-addon">
+                  <i class="fa fa-calendar fa-1x"></i>
+                </span>
+                <input type="text" class="form-control" id="fechafum" formControlName="fechafum" placeholder="mm/dd/yyyy" name="fechaini"
+                  [(ngModel)]="fechaini" [maxDate]="maxDate" #dp="bsDatepicker" bsDatepicker>
+                <div *ngIf="fechafum.invalid && (fechafum.dirty || fechafum.touched)">
+                  <div class="label-error" *ngIf="fechafum.errors['required']">
+                    El campo fecha Fur no debe estar vacio
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+            <div class="form-group">
+              <label>Edad gestacional </label>
+              <span class="text-danger">*</span>
+              <input type="text" class="form-control" id="diasgestacion" [(ngModel)]="dias" formControlName="diasgestacion" placeholder="Dias">
+              <div *ngIf="diasgestacion.invalid && (diasgestacion.dirty || diasgestacion.touched)">
+                <div class="label-error" *ngIf="diasgestacion.errors['required']">
+                  El campo Edad gestacional no debe estar vacio
+                </div>
+                <div class="label-error" *ngIf="diasgestacion.errors['pattern']">
+                  El campo Edad gestacional puede contener letras, carácter especial
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+            <!-- fin form-grup2 -->
+
+            <!--inicio form-group3-->
+            <div class="form-group">
+              <label style="margin-right: 10px">Tomar dias de vacaciones</label>
+              <span class="text-danger">*</span>
+              <br>
+              <input type="radio" id="tomarvacaciones" name="tomarvacaciones" value="1" formControlName="tomarvacaciones" style="margin-right: 2px"> Si
+              <input type="radio" id="tomarvacaciones1" name="tomarvacaciones" value="0" formControlName="tomarvacaciones" style="margin-left: 10px"> No
+            </div>
+            <!--fin form-group3-->
+
+
+
+
+          </div>
+          <!--fin de la columna 2-->
+
+
+        </div>
+        <!--fin de la fila-->
+
+
+
+      </div>
+
+      <!--fin del contenido del formulario incapacidades-->
+
+      <!--botonera-->
+      <div class="margin pull-right">
+        <div class="btn-group">
+          <button class="btn btn-danger" (click)="cancelar()">
+            <span class="fa fa-close" aria-hidden="true"></span> Cancelar
+          </button>
+        </div>&nbsp;
+        <div class="btn-group">
+          <button type="button" (click)="guardardinamizadora()" [disabled]="!form.valid" class="btn btn-success">
+            <span class="fa fa-save" aria-hidden="true"></span> Guardar</button>
+        </div>
+      </div>
+      <!--fin de botonera-->
+    </form>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-12">
+      <pre class="code-preview">{{form.value | json}}</pre>
+    </div>
+  </div>
+
+  <div>
+    <!-- {{ uploadFile | json }}-->
+  </div>
+
+</section>

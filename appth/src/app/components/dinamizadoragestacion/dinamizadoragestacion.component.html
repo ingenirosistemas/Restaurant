@@ -1,0 +1,189 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Gestantes
+    <small>Listado</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <a href="./dashboard">
+        <i class="fa fa-dashboard"></i> Inicio</a>
+    </li>
+  </ol>
+</section>
+
+
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="box-header with-border">
+    <div class="margin pull-right">
+      <div class="btn-group">
+
+        <button class="btn btn-success" (click)="nuevo()">
+          <span class="fa fa-plus-square" aria-hidden="true"></span> Nuevo</button>
+
+      </div>
+    </div>
+  </div>
+
+  <form [formGroup]="form" (keydown.enter)="$event.preventDefault()">
+    <accordion>
+      <accordion-group heading="Búsqueda avanzada">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Número Documento</label>
+                <div class="col-sm-9">
+                  <input formControlName="numerodocumento" type="text" class="form-control" name="documento" id="documento" placeholder="Digíte documento"
+                    (keydown.enter)="buscardinamizadoras()">
+                  <div *ngIf="numerodocumento.invalid && (numerodocumento.dirty || numerodocumento.touched)">
+                    <div class="label-error" *ngIf="numerodocumento.errors['minlength']">
+                      El Número de Documento debe tener al menos 7 caracteres de largo.
+                    </div>
+                    <div class="label-error" *ngIf="numerodocumento.errors['maxlength']">
+                      El Número de Documento solo debe tener 11 caracteres de largo.
+                    </div>
+                    <div class="label-error" *ngIf="numerodocumento.errors['pattern']">
+                      El Formato es Incorrecto.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Nombre Completo</label>
+                <div class="col-sm-9">
+                  <input formControlName="nombrecompleto" type="text" class="form-control" name="name" id="name" placeholder="Digíte nombre"
+                    (keydown.enter)="buscardinamizadoras()">
+                  <div *ngIf="nombrecompleto.invalid && (nombrecompleto.dirty || nombrecompleto.touched)">
+
+                    <div class="label-error" *ngIf="nombrecompleto.errors['pattern']">
+                      El campo nombre completo no puede contener numeros
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box-footer">
+          <div class="margin pull-right">
+            <button type="button" class="btn btn-primary" [disabled]="!form.valid" (click)="buscardinamizadoras()">
+              <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+              Buscar
+            </button>
+          </div>
+        </div>
+      </accordion-group>
+    </accordion>
+  </form>
+
+
+  <div class="box box-success">
+    <div class="box-header">
+      <h3 class="box-title"></h3>
+      <div class="box-tools">
+      </div>
+    </div>
+
+    <div class="box-body no-padding">
+      <div class="box-body table-responsive no-padding">
+        <table class="table table-bordered" [mfData]="lstEmbarazoActual" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage">
+          <thead>
+            <tr>
+              <th style="width: 10%;text-align: center">
+                Número Documento
+              </th>
+              <th style="width: 10%;text-align: center">
+                Dinamizador
+              </th>
+              <th style="width: 10%;text-align: center">
+                Cargo
+              </th>
+              <th style="width: 10%;text-align: center">
+                Área
+              </th>
+              <th style="width: 10%;text-align: center">
+                Edad Gestacional/Dias
+              </th>
+              <th style="width: 10%;text-align: center">
+                Fecha probable de parto
+              </th>
+              <th style="width: 10%;text-align: center">
+                Fecha Fum
+              </th>
+              <th style="width: 10%;text-align: center">
+                Tomar vacaciones
+              </th>
+              <th style="width: 10%;text-align: center">
+                Archivo
+              </th>
+              <th style="width: 10%;text-align: center">
+                Acciones
+              </th>
+
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr *ngFor="let resultado of mf.data;let i = index">
+              <td style="text-align: center">
+                <span class="badge bg-green">{{ resultado.documentoidentificacion }}</span>
+              </td>
+              <td style="text-align: center">{{ resultado.primernombre }} {{ resultado.primerapellido }}</td>
+              <td style="text-align: center">{{ resultado.cargo }}</td>
+              <td style="text-align: center"> {{ resultado.area}}</td>
+              <td style="text-align: center"> {{ resultado.edad_gestacional}}</td>
+              <td style="text-align: center"> {{ resultado.fechaprobabaleparto}} </td>
+              <td style="text-align: center"> {{ resultado.fechafum}} </td>
+              <td style="text-align: center"> {{ resultado.tomavacaciones==0?'No':'Si'}}</td>
+              <td style="text-align: center">
+                <div [hidden]="!resultado.archivo">
+                  <button id="addItemButton" type="button" class="btn btn-primary btn-margin" tooltip="Descargar Archivo." placement="top"
+                    (click)="dowload(resultado.archivo)">
+                    <span class="fa fa-download" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </td>
+              <td style="text-align: center">
+                <button type="button" class="btn btn-warning btn-margin" tooltip="Editar gestante." placement="top" (click)="dinamizadoraSelectOnClick(resultado,i);">
+                  <span class="btn-label">
+                    <i class="fa fa-pencil "></i>
+                  </span>
+                </button>
+                &nbsp;
+                <button type="button" (click)="novedad(resultado)" class="btn btn-default btn-margin" tooltip="Novedad." placement="top">
+                  <span class="btn-label">
+                    <i class="fas fa-history"></i>
+                  </span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+
+          <tfoot>
+            <tr>
+              <td colspan="9">
+                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+              </td>
+            </tr>
+          </tfoot>
+
+        </table>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+
+
+
+</section>
